@@ -152,6 +152,11 @@
                 position: relative;
                 margin-right: 10px;
             }
+            @media screen and(max-width:1024px){
+                .profile{
+
+                }
+            }
             @media screen and (max-width: 700px) {
                 .profile {
                     max-width: 300px;
@@ -173,8 +178,8 @@
                 <article class="profile">
                     <header class="profile-header">
                         <img src="iniimej.jpg" class="profile-avatar" alt="my pic">
-                        <h3 class="profile-name">Alugoro Gandhi Mukti</h3>
-                        <span class="profile-post">Full Stack Web Developer</span>
+                        <h3 class="profile-name" id="name-profile">x</h3>
+                        <span class="profile-post" id="expertise-profile">x</span>
                     </header>
                     <div class="profile-stats">
                         <div class="profile-group">
@@ -207,21 +212,48 @@
                     </div>
 
                     <footer class="profile-socials">
-                        <a href="" class="profile-social">
+                        <a href="" class="profile-social" id="facebook-link">
                             <i class="fa fa-facebook"></i>
                         </a>
-                        <a href="https://www.linkedin.com/in/saya-alugoro-gandhi/" class="profile-social">
+                        <a href="https://www.linkedin.com/in/saya-alugoro-gandhi/" class="profile-social" id="linkedin-link">
                             <i class="fa fa-linkedin"></i>
                         </a>
-                        <a href="" class="profile-social">
+                        <a href="" class="profile-social" id="twitter-link">
                             <i class="fa fa-twitter"></i>
                         </a>
                     </footer>
                 </article>
             </div>
         </div>
+        <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
         <script>
+            var HttpClient = function(){
+                this.get = function(url, callback){
+                    var HttpRequest = new XMLHttpRequest();
+                    HttpRequest.onreadystatechange = function(){
+                        if(HttpRequest.readyState == 4 && HttpRequest.status == 200)
+                        callback(HttpRequest.responseText);
+                    }
+
+                    HttpRequest.open("GET", url, true);
+                    HttpRequest.send(null)
+                }
+            }
             
+            var iniurl = "https://private-7ff18-alugoroprofilecard.apiary-mock.com/data";
+            var client = new HttpClient();
+            client.get(iniurl, function(response){
+                // alert(response);
+                // var aResponse = JSON.stringify(response);
+                var aResponse = JSON.parse(response);
+                console.log(aResponse.name);
+                document.getElementById("name-profile").innerHTML = aResponse.name;
+                document.getElementById("expertise-profile").innerHTML = aResponse.expertise;
+                document.getElementById("facebook-link").href = aResponse.facebook;
+                document.getElementById("linkedin-link").href = aResponse.linkedin;
+                document.getElementById("twitter-link").href = aResponse.twitter;
+            });
         </script>
     </body>
 </html>
